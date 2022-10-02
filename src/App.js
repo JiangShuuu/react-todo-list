@@ -28,12 +28,20 @@ function App() {
 
   // Delete task
   const deleteTask = (id) => {
-    //
+    console.log(id)
+    let newTasks = toDo.filter( task => task.id !== id)
+    setToDo(newTasks);
   }
 
   // Mark task as done or completed
   const markDone = (id) => {
-    //
+    let newTask = toDo.map( task => {
+      if (task.id === id) {
+        return ({ ...task, status: !task.status})
+      }
+      return task;
+    })
+    setToDo(newTask);
   }
 
 
@@ -100,13 +108,20 @@ function App() {
                   <span className="taskText">{task.title}</span>
                 </div>
                 <div className='iconsWrap'>
-                  <span title="Completed / Not Compelted">
+                  <span
+                    onClick={(e) => markDone(task.id)} 
+                    title="Completed / Not Compelted">
                     <FontAwesomeIcon icon={faCircleCheck} />
                   </span>
-                  <span title="Edit">
-                    <FontAwesomeIcon icon={faPen} />
-                  </span>
-                  <span title="Delete">
+                  { task.status ? null : (
+                    <span title="Edit">
+                      <FontAwesomeIcon icon={faPen} />
+                    </span>
+                  )}
+                  
+                  <span 
+                    onClick={() => deleteTask(task.id)}
+                    title="Delete">
                     <FontAwesomeIcon icon={faTrashCan} />
                   </span>
                 </div>
