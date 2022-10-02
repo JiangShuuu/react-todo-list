@@ -14,7 +14,7 @@ function App() {
 
   // Temp State
   const [newTask, setNewTask] = useState('');
-  const [updateDate, setUpdateData] = useState('');
+  const [updateData, setUpdateData] = useState('');
 
   // Add task
   const addTask = () => {
@@ -47,17 +47,27 @@ function App() {
 
   // Cancel update
   const cancelUpdate = () => {
-    //
+    setUpdateData('');
+
   }
 
-  // Chanfe task for update
+  // Change task for update
   const changeTask = (e) => {
-    //
+    let newEntry = {
+      id: updateData.id,
+      title: e.target.value,
+      status: updateData.status ? true : false
+    }
+
+    setUpdateData(newEntry);
   }
 
   // Update task
   const updateTask = () => {
-    //
+    let filterRecords = [...toDo].filter( task => task.id !== updateData.id )
+    let updateObject = [...filterRecords, updateData]
+    setToDo(updateObject);
+    setUpdateData('');
   }
 
   return (
@@ -67,31 +77,41 @@ function App() {
       <br /><br />
 
       {/* Update Task */}
-      <div className='row mb-3'>
-        <div className='col'>
-          <input className='form-control form-control-lg' />
-        </div>
-        <div className='col-auto'>
-          <button className='btn btn-lg btn-success mr-20'>Update</button>
-          <button className='btn btn-lg btn-warning'>Cancel</button>
-        </div>
-      </div>
-
-
-      {/* Add Task */}
-      <div className='row mb-3'>
-        <div className='col'>
-          <input
-            value={newTask}
-            onChange={ (e) => setNewTask(e.target.value)}  
-            className="form-control form-control-lg" />
-        </div>
-        <div className='col-auto'>
-          <button
-            onClick={addTask} 
-            className='btn btn-lg btn-success'>Add Task</button>
-        </div>
-      </div>
+      {updateData && updateData ? (
+        <>
+          <div className='row mb-3'>
+            <div className='col'>
+              <input
+                value={updateData && updateData.title} 
+                onChange={(e) => changeTask(e)}
+                className='form-control form-control-lg' />
+            </div>
+            <div className='col-auto'>
+              <button
+                onClick={updateTask} 
+                className='btn btn-lg btn-success mr-20'>Update</button>
+              <button className='btn btn-lg btn-warning'>Cancel</button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+        {/* Add Task */}
+          <div className='row mb-3'>
+            <div className='col'>
+              <input
+                value={newTask}
+                onChange={ (e) => setNewTask(e.target.value)}  
+                className="form-control form-control-lg" />
+            </div>
+            <div className='col-auto'>
+              <button
+                onClick={addTask} 
+                className='btn btn-lg btn-success'>Add Task</button>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Display Todos */}
 
@@ -114,7 +134,14 @@ function App() {
                     <FontAwesomeIcon icon={faCircleCheck} />
                   </span>
                   { task.status ? null : (
-                    <span title="Edit">
+                    <span
+                      onClick={() => setUpdateData({
+                        id: task.id,
+                        title: task.title,
+                        status: task.status ? true : false
+                      })} 
+                      title="Edit"
+                    >
                       <FontAwesomeIcon icon={faPen} />
                     </span>
                   )}
