@@ -37,8 +37,12 @@ body {
   justify-content: center;
 }
 
-.taskText {
+span {
   color: white;
+}
+
+.taskBg .taskText {
+  flex: 1;
 }
 
 .taskBg .done .taskText {
@@ -46,3 +50,27 @@ body {
   opacity: 0.3;
   flex: 1;
 }
+
+.taskBg .iconsWrap {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  width: auto;
+  display: inline-block;
+}
+
+.taskBg .iconsWrap span {
+  display: inline-block;
+  margin: 0px 10px 0px 10px;
+  cursor: pointer;
+}
+
+.taskBg .iconsWrap span:hover {
+  color: #42ddf5;
+}
+
+.mr-20 {
+  margin-right: 20px;
+}
+
