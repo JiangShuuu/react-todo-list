@@ -51,13 +51,16 @@ function App() {
 
   // Change task for update
   const changeTask = (e) => {
-    let newEntry = {
-      id: updateData.id,
-      title: e.target.value,
-      status: updateData.status ? true : false
-    }
+    // let newEntry = {
+    //   id: updateData.id,
+    //   title: e.target.value,
+    //   status: updateData.status ? true : false
+    // }
 
-    setUpdateData(newEntry);
+    setUpdateData({
+      ...updateData,
+      title: e.target.value
+    });
   }
 
   // Update task
