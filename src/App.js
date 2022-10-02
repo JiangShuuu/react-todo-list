@@ -7,10 +7,7 @@ import React, {useState} from 'react';
 function App() {
   
   // Tasks (ToDo List) State
-  const [toDo, setToDo] = useState([
-    {"id": 1, "title": "Task 1", "status": true},
-    {"id": 2, "title": "Task 2", "status": false}
-  ]);
+  const [toDo, setToDo] = useState([]);
 
   // Temp State
   const [newTask, setNewTask] = useState('');
@@ -28,7 +25,6 @@ function App() {
 
   // Delete task
   const deleteTask = (id) => {
-    console.log(id)
     let newTasks = toDo.filter( task => task.id !== id)
     setToDo(newTasks);
   }
